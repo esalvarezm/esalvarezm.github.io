@@ -1,7 +1,4 @@
 import pandas as pd
-import matplotlib
-import jinja2
-matplotlib.use('Agg')
 
 data = [[45939, 21574, 2876, 1815, 1646,   89,  555],
         [60423, 29990, 4708, 2568, 2366, 1411,  733],
@@ -21,5 +18,9 @@ data = pd.DataFrame(
 
 data
 
-for col in data.columns:
-    fig = data.plot.bar(y=col).get_figure().savefig('figs/' + col + '.png')
+from jinja2 import Template
+
+str = open('templates/index.html', 'r').read()
+template = Template(str)
+str = template.render(regions=data.columns.tolist())
+open('index.html', 'w').write(str);
